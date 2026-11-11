@@ -4,47 +4,199 @@
 
 /* Selector universal */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Ajustes generales del documento */
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 /* Configuración del cuerpo */
 body {
-    min-height: 100vh;
-    line-height: 1.5;
+  min-height: 100vh;
+  line-height: 1.5;
 }
 
 /* Imágenes y elementos multimedia */
-img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
 /* Formularios */
-input, button, textarea, select {
-    font: inherit;
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
 
 /* Enlaces */
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Listas */
-ul, ol {
-    list-style: none;
+ul,
+ol {
+  list-style: none;
 }
 
 /* ================================================================
-  Variables CSS de colores y tipografía, 
-  estilos para botones, campos de formulario, 
-  tarjetas de resultado y mensajes de aviso.
+  Variables CSS de colores y tipografía.
+  Estilos para:
+  Botones.
+  Campos de formulario.
+  Tarjetas de resultado y mensajes de aviso.
   Todas las herramientas la importarán para tener un aspecto común.
 =================================================================== */
+
+/* Variables globales de diseño */
+:root {
+  --color-primario: #2563eb;
+  --color-primario-hover: #1d4ed8;
+  --color-fondo: #f8fafc;
+  --color-superficie: #ffffff;
+  --color-texto: #1e293b;
+  --color-texto-suave: #64748b;
+  --color-borde: #cbd5e1;
+  --color-exito: #16a34a;
+  --color-exito-fondo: #dcfce7;
+  --fuente-principal: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radio-borde: 8px;
+}
+
+body {
+  font-family: var(--fuente-principal);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+  padding: 1.5rem;
+}
+
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+  background-color: var(--color-superficie);
+  padding: 2rem;
+  border-radius: var(--radio-borde);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--color-texto-suave);
+  margin-bottom: 1.5rem;
+}
+
+/* Formularios */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+textarea,
+input[type="text"],
+input[type="url"],
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: #fff;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+
+/* Botones */
+.btn-primary {
+  background-color: var(--color-primario);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radio-borde);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primario-hover);
+}
+
+/* Tarjetas de resultados */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.card {
+  background-color: var(--color-fondo);
+  padding: 1rem;
+  border-radius: var(--radio-borde);
+  border: 1px solid var(--color-borde);
+  text-align: center;
+}
+
+.card h3 {
+  font-size: 0.875rem;
+  color: var(--color-texto-suave);
+  margin-bottom: 0.25rem;
+}
+
+.card p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primario);
+}
+
+/* Mensajes de aviso */
+.aviso-exito {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-exito-fondo);
+  color: var(--color-exito);
+  border-radius: var(--radio-borde);
+  font-weight: 600;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Adaptación a móvil */
+@media (max-width: 600px) {
+  body {
+    padding: 0.75rem;
+  }
+  .container {
+    padding: 1.25rem;
+  }
+}
