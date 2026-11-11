@@ -41,3 +41,10 @@ a {
 ul, ol {
     list-style: none;
 }
+
+/* ================================================================
+  Variables CSS de colores y tipografía, 
+  estilos para botones, campos de formulario, 
+  tarjetas de resultado y mensajes de aviso.
+  Todas las herramientas la importarán para tener un aspecto común.
+=================================================================== */
