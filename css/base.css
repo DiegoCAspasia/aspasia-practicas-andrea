@@ -50,26 +50,34 @@ ol {
   list-style: none;
 }
 
-/* ================================================================
-  Variables CSS de colores y tipografía.
-  Estilos para:
-  Botones.
-  Campos de formulario.
-  Tarjetas de resultado y mensajes de aviso.
-  Todas las herramientas la importarán para tener un aspecto común.
-=================================================================== */
+/* =================================================================================================
+   VARIABLES CSS - IDENTIDAD VISUAL GRUPO ASPASIA
+   (Extraido de la página del grupoaspacia y combinando web principal y páginas de captación/cursos)
+=================================================================================================== */
 
-/* Variables globales de diseño */
 :root {
-  --color-primario: #2563eb;
-  --color-primario-hover: #1d4ed8;
-  --color-fondo: #f8fafc;
-  --color-superficie: #ffffff;
-  --color-texto: #1e293b;
-  --color-texto-suave: #64748b;
-  --color-borde: #cbd5e1;
-  --color-exito: #16a34a;
+  /* Colores de Marca y Azules */
+  --color-primario: #006ae4; /* Azul corporativo principal */
+  --color-primario-hover: #0055b6; /* Azul oscuro para hovers */
+  --color-secundario-bg: #e5f0fc; /* Azul pastel muy suave para tarjetas/fondos */
+
+  /* Botones de Llamada a la Acción (CTA estilo landing de cursos) */
+  --color-cta: #e9c40c; /* Amarillo vibrante CTA */
+  --color-cta-hover: #d2af07; /* Tono un poco más oscuro para hover de CTA */
+
+  /* Superficies y Textos */
+  --color-fondo: #f8fafc; /* Fondo general limpio */
+  --color-superficie: #ffffff; /* Blanco puro para contenedores */
+  --color-texto: #000000; /* Negro corporativo principal */
+  --color-texto-suave: #64748b; /* Gris secundario para subtítulos */
+  --color-borde: #cbd5e1; /* Gris claro para bordes y campos */
+
+  /* Estados (Éxito y Alerta corporativos) */
+  --color-exito: #1f804d; /* Verde de éxito */
   --color-exito-fondo: #dcfce7;
+  --color-alerta: #c63b38; /* Rojo de aviso / error */
+
+  /* Tipografía y Radios */
   --fuente-principal: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --radio-borde: 8px;
 }
@@ -94,6 +102,7 @@ body {
 h1 {
   font-size: 1.75rem;
   margin-bottom: 0.5rem;
+  color: var(--color-primario);
 }
 
 .subtitle {
@@ -132,7 +141,7 @@ select:focus {
   border-color: var(--color-primario);
 }
 
-/* Botones */
+/* Botones Principales y CTA de Cursos */
 .btn-primary {
   background-color: var(--color-primario);
   color: #ffffff;
@@ -149,6 +158,23 @@ select:focus {
   background-color: var(--color-primario-hover);
 }
 
+/* Botón de llamada a la acción secundario/destacado */
+.btn-cta {
+  background-color: var(--color-cta);
+  color: #000000;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: var(--radio-borde);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-cta:hover {
+  background-color: var(--color-cta-hover);
+}
+
 /* Tarjetas de resultados */
 .results-grid {
   display: grid;
@@ -158,7 +184,7 @@ select:focus {
 }
 
 .card {
-  background-color: var(--color-fondo);
+  background-color: var(--color-secundario-bg);
   padding: 1rem;
   border-radius: var(--radio-borde);
   border: 1px solid var(--color-borde);
@@ -180,6 +206,7 @@ select:focus {
 /* Mensajes de aviso */
 .aviso-exito {
   margin-top: 1rem;
+  margin-bottom: 1rem;
   padding: 0.75rem 1rem;
   background-color: var(--color-exito-fondo);
   color: var(--color-exito);

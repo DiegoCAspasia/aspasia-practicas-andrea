@@ -1,5 +1,5 @@
 // Selección de elementos del DOM
-const textarea = document.getElementById("texto-input");
+const textarea = document.getElementById("texto-usuario");
 const selectVelocidad = document.getElementById("velocidad-select");
 const btnCopiar = document.getElementById("btn-copiar");
 const avisoCopiado = document.getElementById("aviso-copiado");
@@ -40,11 +40,17 @@ function analizarTexto() {
       : texto.split(/\n\s*\n/).filter((p) => p.trim().length > 0);
   const numParrafos = parrafos.length;
 
-  // 5. Cálculo del tiempo de lectura en minutos y segundos
+  // 5. Cálculo del tiempo de lectura
   const velocidad = parseInt(selectVelocidad.value, 10);
-  const totalSegundos = Math.round((numPalabras / velocidad) * 60);
-  const minutos = Math.floor(totalSegundos / 60);
-  const segundos = totalSegundos % 60;
+
+  // Calculamos los minutos directamente en decimal (ej: 2.5 minutos)
+  const minutosTotales = numPalabras / velocidad;
+
+  // La parte entera son los minutos
+  const minutos = Math.trunc(minutosTotales);
+
+  // Los decimales sobrantes los pasamos a segundos y redondeamos
+  const segundos = Math.round((minutosTotales - minutos) * 60);
 
   let tiempoFormateado = `${segundos} s`;
   if (minutos > 0) {
@@ -61,11 +67,15 @@ function analizarTexto() {
   statTiempo.textContent = tiempoFormateado;
 }
 
+/**
+ * Eventos y funcionalidades
+ */
+
 // Eventos en tiempo real al escribir o cambiar la velocidad
 textarea.addEventListener("input", analizarTexto);
 selectVelocidad.addEventListener("change", analizarTexto);
 
-// Copiar resumen al portapapeles
+// Formato de resumen para copiar al portapapeles
 btnCopiar.addEventListener("click", () => {
   const resumen = [
     `Métricas del texto:`,
@@ -77,10 +87,11 @@ btnCopiar.addEventListener("click", () => {
     `- Tiempo estimado de lectura: ${statTiempo.textContent}`,
   ].join("\n");
 
+  // Copiar resumen al portapapeles
   navigator.clipboard.writeText(resumen).then(() => {
     avisoCopiado.classList.remove("hidden");
     setTimeout(() => {
       avisoCopiado.classList.add("hidden");
-    }, 2500);
+    }, 3500);
   });
 });

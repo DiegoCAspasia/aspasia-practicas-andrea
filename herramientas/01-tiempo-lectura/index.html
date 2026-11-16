@@ -3,8 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Calculadora de tiempo de lectura y métricas de texto. Obtén estadísticas sobre palabras, caracteres, frases, párrafos y tiempo estimado de lectura."
+    />
+    <!-- Enlace para los favicons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../../img/03-favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../img/03-favicon-32x32.png"
+    />
     <title>Calculadora de Tiempo de Lectura y Métricas</title>
-    <!-- Subimos 3 niveles para llegar a css/base.css -->
+    <!-- Enlace al CSS base compartido -->
     <link rel="stylesheet" href="../../css/base.css" />
   </head>
   <body>
@@ -16,9 +33,9 @@
       </p>
 
       <div class="form-group">
-        <label for="texto-input">Texto a analizar:</label>
+        <label for="texto-usuario">Texto a analizar:</label>
         <textarea
-          id="texto-input"
+          id="texto-usuario"
           rows="10"
           placeholder="Pega aquí el texto del artículo..."
         ></textarea>
@@ -32,7 +49,7 @@
           <option value="280">Rápida (280 palabras/min)</option>
         </select>
       </div>
-
+      <!-- Sección de resultados -->
       <section class="results-grid" aria-label="Resultados del análisis">
         <div class="card">
           <h3>Palabras</h3>
@@ -60,12 +77,12 @@
         </div>
       </section>
 
+      <p id="aviso-copiado" class="aviso-exito hidden" role="status">
+        ¡Copiado!
+      </p>
       <button type="button" id="btn-copiar" class="btn-primary">
         Copiar resumen
       </button>
-      <p id="aviso-copiado" class="aviso-exito hidden" role="status">
-        ¡Resumen copiado al portapapeles!
-      </p>
     </main>
 
     <script src="./js/script.js"></script>
