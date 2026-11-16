@@ -1,73 +1,118 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Analizador de Densidad de Palabras Clave</title>
-  <!-- Enlace al CSS base corporativo compartido -->
-  <link rel="stylesheet" href="../../css/base.css">
-</head>
-<body>
-  <div class="container">
-    <h1>Analizador de Densidad de Keywords</h1>
-    <p class="subtitle">Comprueba la frecuencia y densidad de tus palabras clave y descubre los términos dominantes del texto.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Analiza la densidad de palabras clave en tu contenido y descubre los términos dominantes."
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../../img/03-favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../img/03-favicon-32x32.png"
+    />
+    <title>Analizador de Densidad de Palabras Clave</title>
+    <!-- Enlace al CSS base compartido -->
+    <link rel="stylesheet" href="../../css/base.css" />
+    <!-- Enlace al CSS específico de la herramienta -->
+    <link rel="stylesheet" href="css/estilos.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Analizador de Densidad de Palabras Clave</h1>
+      <p class="subtitle">
+        Comprueba la frecuencia y densidad de tus palabras clave y descubre los
+        términos dominantes del texto.
+      </p>
 
-    <!-- Formulario de entrada -->
-    <div class="form-group">
-      <label for="texto-articulo">Texto del artículo:</label>
-      <textarea id="texto-articulo" rows="6" placeholder="Pega aquí el contenido de tu artículo..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="input-keywords">Palabras clave objetivo (separadas por comas):</label>
-      <input type="text" id="input-keywords" placeholder="ej: curso de ingles online, formacion, aspasia">
-    </div>
-
-    <!-- Configuración del rango de densidad -->
-    <div style="display: flex; gap: 1rem; margin-bottom: 1.25rem;">
-      <div class="form-group" style="flex: 1; margin-bottom: 0;">
-        <label for="densidad-min">Densidad mínima (%):</label>
-        <input type="number" id="densidad-min" value="0.5" step="0.1" min="0">
+      <!-- Formulario de entrada -->
+      <div class="form-group">
+        <label for="texto-analisis">Texto a analizar:</label>
+        <textarea
+          id="texto-analisis"
+          rows="6"
+          placeholder="Pega aquí el contenido de tu texto..."
+        ></textarea>
       </div>
-      <div class="form-group" style="flex: 1; margin-bottom: 0;">
-        <label for="densidad-max">Densidad máxima (%):</label>
-        <input type="number" id="densidad-max" value="2.5" step="0.1" min="0">
+
+      <div class="form-group">
+        <label for="input-keywords"
+          >Palabras clave (separadas por comas):</label
+        >
+        <input
+          type="text"
+          id="input-keywords"
+          placeholder="ej: curso de inglés online, formación, aspasia"
+        />
       </div>
-    </div>
 
-    <button id="btn-analizar" class="btn-primary">Analizar Densidad</button>
-
-    <!-- Resultados para las Keywords del Usuario -->
-    <section style="margin-top: 2rem;">
-      <h2>Resultados de Keywords Objetivo</h2>
-      <div id="resultados-keywords" style="margin-top: 1rem;">
-        <!-- Se rellenará dinámicamente desde JavaScript -->
-        <p class="subtitle">Introduce un texto y tus palabras clave para ver el análisis.</p>
+      <!-- Configuración del rango de densidad -->
+      <div class="density-range-container">
+        <div class="form-group density-input-wrapper">
+          <label for="densidad-min">Densidad mínima (%):</label>
+          <input
+            type="number"
+            id="densidad-min"
+            value="0.5"
+            step="0.1"
+            min="0"
+          />
+        </div>
+        <div class="form-group density-input-wrapper">
+          <label for="densidad-max">Densidad máxima (%):</label>
+          <input
+            type="number"
+            id="densidad-max"
+            value="2.5"
+            step="0.1"
+            min="0"
+          />
+        </div>
       </div>
-    </section>
 
-    <!-- Tablas de Ranking y N-gramas -->
-    <section style="margin-top: 2.5rem;">
-      <h2>Top 20 Palabras Frecuentes</h2>
-      <div style="overflow-x: auto; margin-top: 1rem;">
-        <table id="tabla-palabras" style="width: 100%; border-collapse: collapse; text-align: left;">
-          <thead>
-            <tr style="border-bottom: 2px solid var(--color-borde); cursor: pointer;">
-              <th style="padding: 0.5rem;">Palabra ↕</th>
-              <th style="padding: 0.5rem;">Frecuencia ↕</th>
-              <th style="padding: 0.5rem;">Densidad (%) ↕</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Filas dinámicas -->
-          </tbody>
-        </table>
-      </div>
-    </section>
+      <button id="btn-analizar" class="btn-primary">Analizar Densidad</button>
 
-    <!-- Enlaces a los scripts necesarios (primero utilidades y luego la lógica de la tarea) -->
-    <script src="../../js/utilidades.js" defer></script>
-    <script src="js/script.js" defer></script>
-  </div>
-</body>
+      <!-- Resultados para las Keywords del Usuario -->
+      <section class="results-section">
+        <h2>Resultados de Palabras Clave</h2>
+        <div id="resultados-keywords" class="results-container">
+          <!-- Se rellenará dinámicamente desde JavaScript -->
+          <p class="subtitle">
+            Introduce un texto y tus palabras clave para ver el análisis.
+          </p>
+        </div>
+      </section>
+
+      <!-- Tablas de Ranking y N-gramas -->
+      <section class="rankings-section">
+        <h2>Top 20 Palabras Frecuentes</h2>
+        <div class="table-responsive">
+          <table id="tabla-palabras" class="data-table">
+            <thead>
+              <tr>
+                <th>Palabra ↕</th>
+                <th>Frecuencia ↕</th>
+                <th>Densidad (%) ↕</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Filas dinámicas -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Enlaces a los scripts necesarios (primero utilidades y luego la lógica de la tarea) -->
+      <script src="../../js/utilidades.js" defer></script>
+      <script src="js/script.js" defer></script>
+    </main>
+  </body>
 </html>

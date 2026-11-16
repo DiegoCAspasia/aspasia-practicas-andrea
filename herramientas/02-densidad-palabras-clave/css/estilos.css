@@ -1,0 +1,46 @@
+/* ==========================================================
+   ESTILOS ESPECÍFICOS - TAREA 02: DENSIDAD DE PALABRAS CLAVE
+============================================================= */
+
+.density-range-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.density-input-wrapper {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.results-section {
+  margin-top: 2rem;
+}
+
+.results-container {
+  margin-top: 1rem;
+}
+
+.rankings-section {
+  margin-top: 2.5rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.data-table thead tr {
+  border-bottom: 2px solid var(--color-borde);
+  cursor: pointer;
+}
+
+.data-table th {
+  padding: 0.5rem;
+}
