@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
         palabras.push(palabrasSplit[i]);
       }
     }
-    // En el array palabras solo quedan palabras válidas (sin espacios vacíos) del texto normalizado.
 
     const totalPalabras = palabras.length;
 
@@ -33,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // 2. Analizar Keywords del usuario (pasando directamente el texto ya normalizado)
+    // 2. Analizar Keywords del usuario
     analizarKeywordsUsuario(
       textoNormalizado,
       palabrasClave,
@@ -42,8 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
       maxDensity,
     );
 
-    // 3. Generar ranking Top 20 de palabras frecuentes
-    generarRankingPalabras(palabras, totalPalabras);
+    // 3. Generar la tabla unificada de 30 elementos (20 palabras + 10 combinaciones)
+    generarRankingUnificado(palabras, totalPalabras);
   });
 });
 
@@ -65,7 +64,6 @@ function analizarKeywordsUsuario(
     return;
   }
 
-  // Separar keywords manualmente con un bucle
   const keywordsBrutas = palabrasClave.split(",");
   const keywords = [];
   for (let i = 0; i < keywordsBrutas.length; i++) {
@@ -73,7 +71,7 @@ function analizarKeywordsUsuario(
     if (keywordLimpia !== "") {
       keywords.push(keywordLimpia);
     }
-  } // En el array keywords solo quedan keywords válidas (sin espacios vacíos).
+  }
 
   let html = `
     <div class="table-responsive">
@@ -93,16 +91,14 @@ function analizarKeywordsUsuario(
     const kw = keywords[i];
     const kwNormalizada = normalizarTexto(kw);
 
-    // Contar las palabras de la keyword cuando el usuario introduce varias palabras en una keyword.
     const kwPartes = kwNormalizada.split(" ");
-    let numPalabrasClave = 0;
+    let numPalabrasKw = 0;
     for (let p = 0; p < kwPartes.length; p++) {
       if (kwPartes[p] !== "") {
-        numPalabrasClave++;
+        numPalabrasKw++;
       }
     }
 
-    // Expresión regular con límites de palabra (\b)
     const regexKw = new RegExp(
       `\\b${kwNormalizada.replace(/\s+/g, "\\s+")}\\b`,
       "gi",
@@ -114,13 +110,11 @@ function analizarKeywordsUsuario(
       apariciones = coincidencias.length;
     }
 
-    // Cálculo de densidad
     let densidad = 0;
     if (totalPalabras > 0) {
-      densidad = ((apariciones * numPalabrasClave) / totalPalabras) * 100;
+      densidad = ((apariciones * numPalabrasKw) / totalPalabras) * 100;
     }
 
-    // Estado visual con condiciones simples
     let estadoHTML = "";
     if (densidad < minDensity) {
       estadoHTML =
@@ -149,71 +143,181 @@ function analizarKeywordsUsuario(
 
 /** 
  * Listado de Stopwords en español. 
- * Se han incluido artículos, preposiciones, pronombres, conjunciones y otros conectores.
  */
  const STOPWORDS = new Set([
   'de', 'la', 'que', 'el', 'en', 'y', 'los', 'del', 'para' , 'se', 'las', 'por', 'un', 'con', 
-  'no', 'una', 'su', 'al', 'lo', 'como', 'más', 'pero', 'sus', 'le', 'ya', 'o', 'a' , 'este', 'sí', 
-  'porque', 'esta', 'entre', 'cuando', 'muy', 'sin', 'sobre', 'también', 'me', 'hasta', 'hay', 
+  'no', 'una', 'su', 'al', 'lo', 'como', 'mas', 'pero', 'sus', 'le', 'ya', 'o', 'a' , 'este', 'sí', 
+  'porque', 'esta', 'entre', 'cuando', 'muy', 'sin', 'sobre', 'tambien', 'me', 'hasta', 'hay', 
   'donde', 'quien', 'desde', 'todo', 'nos', 'durante', 'todos', 'uno', 'les', 'ni', 'contra', 
   'otros', 'fase', 'ese', 'eso', 'ante', 'ellos', 'e', 'esto', 'mi', 'antes', 'algunos', 'qué', 
-  'unos', 'yo', 'otro', 'otras', 'otra', 'él', 'tanto', 'esa', 'estos', 'mucho', 'quienes', 
-  'nada', 'muchos', 'cual', 'sea', 'poco', 'ella', 'estar', 'haber', 'estas', 'están', 'estado', 
-  'he', 'había', 'fueron', 'ser', 'son' , 'luego' , 'siempre' , 'nunca' , 'ahora'
+  'unos', 'yo', 'otro', 'otras', 'otra', 'el', 'tanto', 'esa', 'estos', 'mucho', 'quienes', 
+  'nada', 'muchos', 'cual', 'sea', 'poco', 'ella', 'estar', 'haber', 'estas', 'estan', 'estado', 
+  'he', 'habia', 'fueron', 'ser', 'son' , 'luego' , 'siempre' , 'nunca' , 'ahora'
 ]);
 
 /**
- * Genera el ranking de palabras frecuentes mediante bucles explícitos
+ * Genera un ranking unificado de exactamente 30 elementos (20 palabras individuales + 10 combinaciones)
  */
-function generarRankingPalabras(palabras, totalPalabras) {
-  const frecuencias = {};
-
-  // Contar frecuencias con bucle for
+function generarRankingUnificado(palabras, totalPalabras) {
+  // --- 1. OBTENER LAS 20 PALABRAS INDIVIDUALES MÁS REPETIDAS ---
+  const frecuenciasPalabras = {};
   for (let i = 0; i < palabras.length; i++) {
     const palabra = palabras[i];
     if (palabra.length > 2 && !STOPWORDS.has(palabra)) {
-      if (frecuencias[palabra]) {
-        frecuencias[palabra]++;
+      if (frecuenciasPalabras[palabra]) {
+        frecuenciasPalabras[palabra]++;
       } else {
-        frecuencias[palabra] = 1;
+        frecuenciasPalabras[palabra] = 1;
       }
     }
   }
 
-  // Pasar el objeto a un array de pares [palabra, frecuencia] manualmente
-  const entradas = [];
-  for (let palabra in frecuencias) {
-    entradas.push([palabra, frecuencias[palabra]]);
+  const listaPalabras = [];
+  for (let palabra in frecuenciasPalabras) {
+    listaPalabras.push({
+      texto: palabra,
+      frecuencia: frecuenciasPalabras[palabra],
+      densidad: (frecuenciasPalabras[palabra] / totalPalabras) * 100
+    });
   }
 
-  // Ordenar de mayor a menor frecuencia
-  entradas.sort(function (a, b) {
-    return b[1] - a[1];
+  listaPalabras.sort(function (a, b) {
+    return b.frecuencia - a.frecuencia;
   });
 
-  // Quedarnos con los 20 primeros elementos como máximo
-  const palabrasOrdenadas = [];
-  const limite = entradas.length < 20 ? entradas.length : 20;
-  for (let i = 0; i < limite; i++) {
-    palabrasOrdenadas.push(entradas[i]);
+  const top20Palabras = [];
+  const limiteP = listaPalabras.length < 20 ? listaPalabras.length : 20;
+  for (let i = 0; i < limiteP; i++) {
+    top20Palabras.push(listaPalabras[i]);
   }
 
-  // Pintar la tabla en el HTML
-  const tbody = document.querySelector("#tabla-palabras tbody");
-  tbody.innerHTML = "";
 
-  for (let i = 0; i < palabrasOrdenadas.length; i++) {
-    const item = palabrasOrdenadas[i];
-    const palabra = item[0];
-    const freq = item[1];
-    const densidad = ((freq / totalPalabras) * 100).toFixed(2);
+  // --- 2. OBTENER LAS 10 COMBINACIONES (Bigramas y Trigramas) MÁS REPETIDAS ---
+  const frecuenciasCombos = {};
+  for (let i = 0; i < palabras.length - 1; i++) {
+    const p1 = palabras[i];
+    const p2 = palabras[i + 1];
 
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${palabra}</td>
-      <td>${freq}</td>
-      <td>${densidad}%</td>
-    `;
-    tbody.appendChild(tr);
+    if (p1.length > 2 && p2.length > 2 && !STOPWORDS.has(p1) && !STOPWORDS.has(p2)) {
+      const combo2 = p1 + " " + p2;
+      if (frecuenciasCombos[combo2]) {
+        frecuenciasCombos[combo2]++;
+      } else {
+        frecuenciasCombos[combo2] = 1;
+      }
+    }
+
+    if (i < palabras.length - 2) {
+      const p3 = palabras[i + 2];
+      if (p1.length > 2 && p3.length > 2 && !STOPWORDS.has(p1) && !STOPWORDS.has(p3)) {
+        const combo3 = p1 + " " + p2 + " " + p3;
+        if (frecuenciasCombos[combo3]) {
+          frecuenciasCombos[combo3]++;
+        } else {
+          frecuenciasCombos[combo3] = 1;
+        }
+      }
+    }
+  }
+
+  const listaCombos = [];
+  for (let combo in frecuenciasCombos) {
+    listaCombos.push({
+      texto: combo,
+      frecuencia: frecuenciasCombos[combo],
+      densidad: (frecuenciasCombos[combo] / totalPalabras) * 100
+    });
+  }
+
+  listaCombos.sort(function (a, b) {
+    return b.frecuencia - a.frecuencia;
+  });
+
+  const top10Combos = [];
+  const limiteC = listaCombos.length < 10 ? listaCombos.length : 10;
+  for (let i = 0; i < limiteC; i++) {
+    top10Combos.push(listaCombos[i]);
+  }
+
+
+  // --- 3. FUSIONAR AMBOS GRUPOS EN UN ÚNICO ARRAY DE 30 ELEMENTOS ---
+  const rankingUnificado30 = [];
+  
+  for (let i = 0; i < top20Palabras.length; i++) {
+    rankingUnificado30.push(top20Palabras[i]);
+  }
+  for (let i = 0; i < top10Combos.length; i++) {
+    rankingUnificado30.push(top10Combos[i]);
+  }
+
+  // Pintar y configurar la ordenación sobre esta tabla única de 30 elementos
+  pintarTablaUnificadaYConfigurarOrden("#tabla-palabras", rankingUnificado30);
+}
+
+/**
+ * Pinta la tabla unificada y permite ordenar exclusivamente sus 30 elementos fijos al hacer clic en los <th>
+ */
+function pintarTablaUnificadaYConfigurarOrden(selectorTabla, arrayDatos30) {
+  const tabla = document.querySelector(selectorTabla);
+  if (!tabla) return;
+
+  const tbody = tabla.querySelector("tbody");
+  const cabeceras = tabla.querySelectorAll("th");
+
+  let asc = false;
+
+  function render() {
+    tbody.innerHTML = "";
+    for (let i = 0; i < arrayDatos30.length; i++) {
+      const item = arrayDatos30[i];
+      const densidadStr = item.densidad.toFixed(2);
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${item.texto}</td>
+        <td>${item.frecuencia}</td>
+        <td>${densidadStr}%</td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+
+  // Pintar inicialmente
+  render();
+
+  // Configurar clics en las cabeceras para reordenar SOLAMENTE este conjunto cerrado de 30 elementos
+  for (let c = 0; c < cabeceras.length; c++) {
+    cabeceras[c].style.cursor = "pointer";
+    cabeceras[c].onclick = function () {
+      asc = !asc;
+
+      arrayDatos30.sort(function (a, b) {
+        let valA, valB;
+
+        if (c === 0) {
+          valA = a.texto;
+          valB = b.texto;
+          if (asc) {
+            return valA.localeCompare(valB);
+          } else {
+            return valB.localeCompare(valA);
+          }
+        } else if (c === 1) {
+          valA = a.frecuencia;
+          valB = b.frecuencia;
+        } else {
+          valA = a.densidad;
+          valB = b.densidad;
+        }
+
+        if (asc) {
+          return valA - valB;
+        } else {
+          return valB - valA;
+        }
+      });
+
+      render();
+    };
   }
 }
