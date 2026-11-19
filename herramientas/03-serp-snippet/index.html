@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Previsualizador de resultados en Google (SERP snippet)."
+    />
+    <!-- Enlace para los favicons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../../img/03-favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../img/03-favicon-32x32.png"
+    />
+    <title>Previsualizador SERP (Google Snippet)t</title>
+    <!-- Enlace al CSS base compartido -->
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="css/estilos.css" />
+  </head>
+  <body>
+    <main>
+      <section class="serp-tool">
+        <h1>Previsualizador SERP (Google Snippet)</h1>
+
+        <!-- Pestañas de Vista -->
+        <div class="serp-pestanias">
+          <button class="pestania-btn active" data-view="desktop">
+            Escritorio
+          </button>
+          <button class="pestania-btn" data-view="mobile">Móvil</button>
+        </div>
+
+        <!-- Formulario de Entradas -->
+        <div class="serp-inputs">
+          <!-- Campo para el título SEO -->
+          <div class="input-group">
+            <label for="serp-title">Título SEO</label>
+            <input
+              type="text"
+              id="serp-title"
+              placeholder="Introduce el título de la página..."
+            />
+            <div class="progress-bar-container">
+              <div id="progress-title" class="progress-bar"></div>
+            </div>
+            <span class="char-info" id="info-title">0 / 580 px</span>
+          </div>
+          <!-- Campo para la URL de la página -->
+          <div class="input-group">
+            <label for="serp-url">URL de la página</label>
+            <input
+              type="text"
+              id="serp-url"
+              placeholder="https://ejemplo.com/categoria/articulo"
+            />
+          </div>
+          <!-- Campo para la meta descripción -->
+          <div class="input-group">
+            <label for="serp-desc">Meta Description</label>
+            <textarea
+              id="serp-desc"
+              placeholder="Introduce la descripción orientada a CTR..."
+            ></textarea>
+            <div class="progress-bar-container">
+              <div id="progress-desc" class="progress-bar"></div>
+            </div>
+            <span class="char-info" id="info-desc">0 / 920 px</span>
+          </div>
+        </div>
+
+        <!-- Simulación Visual del Resultado de Google -->
+        <div class="serp-preview-box desktop-view" id="serp-preview">
+          <div class="serp-url-path" id="preview-url">
+            https://ejemplo.com/categoria/articulo
+          </div>
+          <div class="serp-title-text" id="preview-title">
+            Título de ejemplo para la previsualización en Google
+          </div>
+          <div class="serp-desc-text" id="preview-desc">
+            Esta es la descripción que aparecerá en los resultados de búsqueda
+            de Google. Debe ser atractiva para conseguir clics...
+          </div>
+        </div>
+      </section>
+
+      <!-- Enlace al script específico de la herramienta -->
+      <script src="js/script.js" defer></script>
+    </main>
+  </body>
+</html>

@@ -218,6 +218,46 @@ select:focus {
   display: none;
 }
 
+/* =========================================
+   Estilos para anclas (Enlaces) - base.css
+   ========================================= */
+
+a {
+  color: #006ae4; /* Azul principal (Color 4) */
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  border-radius: 3px;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Estado al pasar el ratón (Hover) */
+a:hover {
+  color: #c63b38; /* Rojo intenso para alto contraste (Color 5) */
+  background-color: #e5f0fc; /* Azul muy claro como sutil resaltado (Color 3) */
+}
+
+/* Estado al hacer clic (Active) */
+a:active {
+  color: #000000; /* Negro puro (Color 2) */
+  background-color: #e9c40c; /* Amarillo brillante (Color 7) */
+}
+
+/* Estado de enfoque para navegación con teclado (Accesibilidad) */
+a:focus-visible {
+  outline: 2px solid #006ae4; /* Azul principal (Color 4) */
+  outline-offset: 2px;
+  background-color: #e5f0fc; /* Azul muy claro (Color 3) */
+}
+
+/* Enlaces ya visitados */
+a:visited {
+  color: #1f804d; /* Verde oscuro para diferenciar sin romper la paleta (Color 6) */
+}
+
 /* Adaptación a móvil */
 @media (max-width: 600px) {
   body {
